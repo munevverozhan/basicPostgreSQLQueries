@@ -1,0 +1,19 @@
+WITH CHECK OPTION : 
+
+-- View için insert,update ve delete komutlarında view'a bağlı koşulun sağlanmadığı durumlarda ilgili işlemin gerçekleşmesini önlemek amacıyla kullanılan yapıdır.
+
+-- mo_view_test adında with check option  içeren bir view oluşturdum.
+
+create or replace view mo_view_test 
+as
+select * from mo_ders
+where length(ders_ad)>8
+with check option ;
+
+select * from mo_view_test;
+
+-- DenemeTest isimli bir dersi view'a eklemek istersek ekleyebiliriz. Çünkü DenemeTest'in kelime sayisi 8'den büyüktür.
+insert into mo_view_test (ders_ad,ders_saat) values ('DenemeTest',1);
+
+-- De isimli bir dersi view'a eklemek istersek ekleyemeyiz , hata verir. Çünkü De'nin kelime sayisi 8'den küçüktür.
+insert into mo_view_test (ders_ad,ders_saat) values ('De',1);
